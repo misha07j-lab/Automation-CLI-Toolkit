@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36915.13 d17.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogParser.Cli", "LogParser.Cli.csproj", "{F13B5C1B-3DA2-4681-BB84-64134D676BAD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogParser.Core", "..\LogParser.Core\LogParser.Core.csproj", "{DE6C43EF-5F33-463A-8985-1BDD91AA9A20}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F13B5C1B-3DA2-4681-BB84-64134D676BAD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F13B5C1B-3DA2-4681-BB84-64134D676BAD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F13B5C1B-3DA2-4681-BB84-64134D676BAD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F13B5C1B-3DA2-4681-BB84-64134D676BAD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DE6C43EF-5F33-463A-8985-1BDD91AA9A20}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DE6C43EF-5F33-463A-8985-1BDD91AA9A20}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DE6C43EF-5F33-463A-8985-1BDD91AA9A20}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DE6C43EF-5F33-463A-8985-1BDD91AA9A20}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {17B8716D-BC36-4594-B1B5-98C7F2DCE77B}
+	EndGlobalSection
+EndGlobal
