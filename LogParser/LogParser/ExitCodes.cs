@@ -11,5 +11,5 @@ public static class ExitCodes
     public const int Success = 0;
     public const int InvalidArguments = 1;
     public const int InputNotFound = 2;
-    public const int ProcessingError = 5;
+    public const int ProcessingError = 3;
 }

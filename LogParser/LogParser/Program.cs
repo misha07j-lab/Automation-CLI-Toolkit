@@ -9,9 +9,21 @@ internal class Program
 {
     static async Task<int> Main(string[] args)
     {
+        if (args.Contains("--version"))
+        {
+            Console.WriteLine("LogParser v1.0.0");
+            return ExitCodes.Success;
+        }
+
         try
         {
-            if (args.Length == 0 || args.Contains("--help"))
+            if (args.Contains("--help"))
+            {
+                PrintHelp();
+                return ExitCodes.Success;
+            }
+
+            if (args.Length == 0)
             {
                 PrintHelp();
                 return ExitCodes.InvalidArguments;
@@ -44,17 +56,31 @@ internal class Program
                 files,
                 parser,
                 filterOptions,
-                options.OutputPath);
+                options.OutputPath,
+                options.Quiet);
 
-            PrintSummary(result);
+
+            if (options.Verbose)
+                PrintSummary(result);
 
             return ExitCodes.Success;
         }
+        catch (ArgumentException ex)
+        {
+            if (ex.Message.Contains("parsing"))
+                Console.Error.WriteLine("Invalid regex pattern.");
+            else
+                Console.Error.WriteLine(ex.Message);
+
+            return ExitCodes.InvalidArguments;
+        }
+
         catch (Exception ex)
         {
             Console.Error.WriteLine($"Unexpected error: {ex.Message}");
             return ExitCodes.ProcessingError;
         }
+
     }
 
     static void PrintHelp()
@@ -69,6 +95,11 @@ internal class Program
         Console.WriteLine("  --regex <pattern>");
         Console.WriteLine("  --level <error,warning,info,debug,trace>");
         Console.WriteLine("  --max-lines <n>");
+        Console.WriteLine("  --verbose                Show summary");
+        Console.WriteLine("  --quiet                  Suppress output");
+        Console.WriteLine("  --help                   Show help");
+        Console.WriteLine("  --version                Show version");
+
     }
 
     static CliOptions ParseArgs(string[] args)
@@ -98,6 +129,9 @@ internal class Program
                     options.Levels.Add(parsed);
             }
         }
+        options.Verbose = args.Contains("--verbose");
+        options.Quiet = args.Contains("--quiet");
+
 
         return options;
     }
@@ -117,8 +151,8 @@ internal class Program
             return Enumerable.Empty<string>();
 
         return Directory
-            .EnumerateFiles(directory, pattern)
-            .Select(Path.GetFullPath);
+        .EnumerateFiles(directory, pattern)
+        .Select(Path.GetFullPath);
     }
 
 

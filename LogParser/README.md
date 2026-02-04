@@ -1,51 +1,47 @@
 ﻿# 🚀 LogParser
 
-Lightweight, high-performance log parsing and filtering utility.  
-# 🚀 LogParser
-
-Lightweight, high-performance log parsing and filtering utility.  
-Part of the **Automation CLI Toolkit** ecosystem.
+A production-ready CLI tool for structured log filtering and analysis.
 
 ---
 
 ## 📑 Table of Contents
 
 - [Overview](#-overview)
-- [Features](#-features)
-- [Installation](#-installation)
 - [Usage](#-usage)
 - [Options](#-options)
 - [Examples](#-examples)
-- [Output](#-output)
+- [Exit Codes](#-exit)
 - [Architecture](#-architecture)
-- [Version](#-version)
-- [License](#-license)
+- [Build](#-build)
+- [Roadmap](#-roadmap)
 
 ---
 
 ## 🔎 Overview
 
-`LogParser` is a self-contained Windows command-line tool for:
+LogParser is a high-performance command-line utility designed for filtering,
+parsing and analyzing log files in automation environments.
 
-- Parsing large log files
-- Filtering by severity level
-- Matching text patterns
-- Applying regex filters
-- Processing multiple files via glob patterns
-- Producing summary statistics
+It supports:
+
+- Multi-file input
+- Text include/exclude filtering
+- Regex filtering
+- Log level filtering
+- Output redirection
+- Quiet and verbose modes
+- Deterministic exit codes for CI/CD
+
+LogParser is a high-performance command-line utility designed for filtering,
+parsing and analyzing log files in automation environments.
 
 ---
 
-## ✨ Features
+## ✨ Usage
 
-- ✔ Streaming file processing (memory-efficient)
-- ✔ Log level filtering (`error`, `warning`, `info`, `debug`, `trace`)
-- ✔ Include / exclude text filtering
-- ✔ Regex support
-- ✔ Multiple file support (`*.log`)
-- ✔ Max lines limiter
-- ✔ Summary statistics
-- ✔ Self-contained single-file executable
+```bash
+LogParser --input <path> [options]
+```
 
 ---
 
@@ -73,91 +69,105 @@ LogParser.exe --input <path> [options]
 
 | Option | Description |
 |--------|-------------|
-| `--out <path>` | Write filtered output to file |
+| `--input <path>` | Input file or pattern (required) |
+| `--out <path>` | Write matched output to file |
 | `--contains <text>` | Include lines containing text |
 | `--exclude <text>` | Exclude lines containing text |
 | `--regex <pattern>` | Filter by regular expression |
 | `--level <levels>` | error,warning,info,debug,trace |
-| `--max-lines <n>` | Limit number of output lines |
+| `--max-lines <n>` | Limit number of matched lines |
+| `--quiet` | Suppress console output |
+| `--verbose` | Print summary statistics |
+| `--help` | Show help |
+| `--version` | Show version |
 
 ---
 
 ## 📖 Examples
 
-### Filter errors and warnings
+### Basic filtering
 
 ```bash
-LogParser.exe --input app.log --level error,warning
+LogParser.Cli.exe --input app.log
 ```
 
 ---
 
-### Filter by text
+### Filter errors only
 
 ```bash
-LogParser.exe --input app.log --contains timeout
+LogParser.Cli.exe --input app.log --level error
 ```
 
 ---
 
-### Filter multiple files
+### Regex filter
+```bash
+LogParser.Cli.exe --input app.log --regex "timeout|failed"
+```
+
+---
+
+### Write to file
 
 ```bash
-LogParser.exe --input logs\*.log --level error
+LogParser.Cli.exe --input app.log --out filtered.log
 ```
 
 ---
 
-### Save result to file
+### Quiet mode (automation use)
 
-```bash
-LogParser.exe --input app.log --level error --out errors.log
+```
+Quiet mode (automation use)
 ```
 
 ---
 
-## 📊 Output
+### Exit Codes
 
-Example summary:
-
-```
-Summary:
-Total lines: 1250
-Matched lines: 32
-Error: 20
-Warning: 12
-```
+| Code | Meaning |
+|--------|-------------|
+| `0` | Success |
+| `1` | Invalid arguments / invalid regex |
+| `2` | Input file not found |
+| `3` | Processing error |
 
 ---
 
-## 🧠 Architecture
-
-Project structure:
-
+### Architecture
 ```
 LogParser.Core
- ├── Models
- ├── Parsing
  ├── Filtering
+ ├── Parsing
  └── Processing
 
 LogParser.Cli
- ├── CLI argument parsing
- └── Execution entry point
+ ├── CLI interface
+ ├── Argument handling
+ └── Exit management
 ```
 
 ---
 
-## 🏷 Version
+### Byild
 
 ```
-v0.1.0
+dotnet publish LogParser.Cli.csproj \
+    -c Release \
+    -r win-x64 \
+    --self-contained true \
+    /p:PublishSingleFile=true
 ```
-
-Initial standalone release.
 
 ---
 
-## 📄 License
+ ## 🚧 Roadmap 
 
-Internal project – Automation CLI Toolkit.
+- Streaming optimization for very large logs
+- Structured JSON log support
+- Performance benchmark mode
+- Linux self-contained build
+
+---
+

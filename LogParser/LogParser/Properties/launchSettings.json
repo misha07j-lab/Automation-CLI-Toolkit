@@ -2,7 +2,7 @@
   "profiles": {
     "LogParser.Cli": {
       "commandName": "Project",
-      "commandLineArgs": "--input test.log --level error,warning"
+      "commandLineArgs": "--input unknown.log\r\n"
     }
   }
 }

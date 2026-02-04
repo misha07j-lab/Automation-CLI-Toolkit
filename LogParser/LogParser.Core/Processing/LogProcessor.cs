@@ -12,12 +12,15 @@ namespace LogParser.Core.Processing;
 public sealed class LogProcessor
 {
     public async Task<ProcessingResult> ProcessAsync(
-        IEnumerable<string> files,
-        ILogParser parser,
-        FilterOptions options,
-        string? outputPath,
-        CancellationToken ct = default)
+    IEnumerable<string> files,
+    ILogParser parser,
+    FilterOptions options,
+    string? outputPath,
+    bool suppressConsoleOutput,
+    CancellationToken ct = default)
+
     {
+
         var filter = new LogFilter(options);
         var summary = new SummaryBuilder();
 
@@ -43,9 +46,13 @@ public sealed class LogProcessor
                 summary.RegisterMatched(entry);
 
                 if (writer != null)
+                {
                     await writer.WriteLineAsync(line);
-                else
+                }
+                else if (!suppressConsoleOutput)
+                {
                     Console.WriteLine(line);
+                }
 
                 written++;
 
@@ -54,6 +61,8 @@ public sealed class LogProcessor
                     break;
             }
         }
+        if (writer != null)
+            await writer.FlushAsync();
 
         return new ProcessingResult(summary);
     }
