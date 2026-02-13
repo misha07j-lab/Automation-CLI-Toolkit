@@ -2,7 +2,11 @@
 
 
 
-A modular collection of production-ready CLI tools designed for automation, data processing, and predictable system integration in Windows environments.
+Automation CLI Toolkit is a modular ecosystem of production-ready CLI tools 
+designed for automation, structured data processing, and predictable system integration 
+in Windows environments.
+
+It is built for engineers who value determinism, explicit contracts, and long-term architectural stability.
 
 
 
